@@ -77,11 +77,11 @@ export function Markdown({ source }: { source: string }) {
 }
 
 function parseInline(text: string): React.ReactNode {
-  const boldItalicMatch = captureGroup(text, /^(?<pre>.*?)((?<!\\)\*(?<!\\)\*(?<!\\)\*(?<t1>.+?)(?<!\\)\*(?<!\\)\*(?<!\\)\*|(?<!\\)_(?<!\\)_(?<!\\)_(?<t2>.+?)(?<!\\)_(?<!\\)_(?<!\\)_)(?<post>.*?)$/);
+  const boldItalicMatch = captureGroup(text, /^(?<pre>.*?)((?<!\\)\*\*\*(?<t1>.+?)(?<!\\)\*\*\*|(?<!\\)___(?<t2>.+?)(?<!\\)___)(?<post>.*?)$/);
   if (boldItalicMatch) {
     return <>{parseInline(boldItalicMatch.pre)}<strong><i>{parseInline(boldItalicMatch.t1 ?? boldItalicMatch.t2)}</i></strong>{parseInline(boldItalicMatch.post)}</>;
   }
-  const boldMatch = captureGroup(text, /^(?<pre>.*?)((?<!\\)\*(?<!\\)\*(?<t1>.+?)(?<!\\)\*(?<!\\)\*|(?<!\\)_(?<!\\)_(?<t2>.+?)(?<!\\)_(?<!\\)_)(?<post>.*?)$/);
+  const boldMatch = captureGroup(text, /^(?<pre>.*?)((?<!\\)\*\*(?<t1>.+?)(?<!\\)\*\*|(?<!\\)__(?<t2>.+?)(?<!\\)__)(?<post>.*?)$/);
   if (boldMatch) {
     return <>{parseInline(boldMatch.pre)}<strong>{parseInline(boldMatch.t1 ?? boldMatch.t2)}</strong>{parseInline(boldMatch.post)}</>;
   }
